@@ -39,9 +39,20 @@ Pulumi felt like an interesting choice because it supported C# as an input langu
 
 4.) Follow EC2 Webserver guide to get Grav up and running: https://www.pulumi.com/registry/packages/aws/how-to-guides/ec2-webserver/
 
+![testmov](./testmov.mov)
 
 
  So the next stage was how to get this running on an ACTUAL webserver, where to host, and how to point a URL to it...
+
+### Step 4 a docker image which contains grav and pulls our content
+
+So now we're going to use a docker image to prop a EC2 t2.micro server with
+This docker image contains a websever (apache) grav (CMS) and the build stages fetches from our documentation git repository for the blogs content
+Using pulumi we utilise ECS (where we can store the image) - 
+
+You can use this docker image file to get started.
+
+
 
 
 
