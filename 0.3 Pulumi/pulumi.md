@@ -39,7 +39,7 @@ Pulumi felt like an interesting choice because it supported C# as an input langu
 
 4.) Follow EC2 Webserver guide to get Grav up and running: https://www.pulumi.com/registry/packages/aws/how-to-guides/ec2-webserver/
 
-![testmov](./testmov.mov)
+![testmov](testmov.mov)
 
 
  So the next stage was how to get this running on an ACTUAL webserver, where to host, and how to point a URL to it...
