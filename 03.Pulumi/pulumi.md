@@ -52,9 +52,31 @@ Using pulumi we utilise ECS (where we can store the image) -
 
 You can use this docker image file to get started.
 
+The main additions I added were
+
+### Add github to list of known hosts
+    RUN mkdir /root/.ssh
+    RUN touch /root/.ssh/known_hosts
+    RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+    
+### clone into the pages directory
+    RUN git clone https://github.com/matt-website/blog.git /var/www/html/user/git-blog
+    RUN cp -r /var/www/html/user/git-blog/* /var/www/html/user/pages
+
+You can download this docker file directly from:
 
 
+## Step 5 More Pulumi!
 
+Okay now let's go indepth into the pulumi script which performs the entire process of getting our website hosted
+
+### A
+
+    // Create an AWS resource (S3 Bucket)
+    var repository = new Awsx.Ecr.Repository("grav-repository", new RepositoryArgs()
+    {
+    ForceDelete = true, // Ensures pulumi delete runs correctly
+    });
 
 <div>
   <iframe id="inlineFrameExample"
