@@ -72,11 +72,69 @@ Okay now let's go indepth into the pulumi script which performs the entire proce
 
 ### A
 
+
     // Create an AWS resource (S3 Bucket)
     var repository = new Awsx.Ecr.Repository("grav-repository", new RepositoryArgs()
     {
-    ForceDelete = true, // Ensures pulumi delete runs correctly
+        ForceDelete = true, // Ensures pulumi delete runs correctly
     });
+
+
+First command is to create a repository on the ECR service. this repository is where we will upload the docker image of our grav server we created previously.
+AWS uses the Elastic Component Registry to store these, and our task will refer to it later on
+
+![aws_grav_repository.png](aws_grav_repository.png?resize=800,400)
+
+    Image image = new Awsx.Ecr.Image("grav-image", new()
+    {
+        Path = "../grav-docker",
+        RepositoryUrl = repository.Url,
+    });
+
+Next step is to generate our image - `Path` is relative to where pulumi runs, and it wants the location of the folder containing the Dockerfile.
+`RepositoryURL` We use from the repository we just created.
+
+![aws_grav_image.png](aws_grav_image.png)
+
+    Cluster cluster = new Pulumi.Aws.Ecs.Cluster("grav-cluster");
+
+The cluster is simple to construct
+
+    ApplicationLoadBalancer loadBalancer = new ApplicationLoadBalancer("grav-lb", new ApplicationLoadBalancerArgs()
+    {
+        DefaultTargetGroup = new TargetGroupArgs
+        {
+            HealthCheck = new TargetGroupHealthCheckArgs()
+            {
+                Path = @"/healthcheck.html",
+            },
+            TargetType = "ip",
+            Port = 80,
+            Protocol = "HTTP",
+        }
+    });
+
+https://www.pulumi.com/registry/packages/aws/api-docs/lb/targetgroup/#targetgrouphealthcheck
+
+The ApplicationLoadBalancer handles a number of asepcts of ultimately creating us a browsable website. Let's talk through where I've deviated from the defaults in a little more detail.
+
+        HealthCheck = new TargetGroupHealthCheckArgs()
+        {
+            Matcher = "200,202,302",
+        },
+
+In order to validate the resources provisioned are still functioning correctly. The Load Balancer will perform a what's known as a 'health check'. By default is simply performs an HTTP GET to the target, and if it receievs a `200 OK` response code, the health check passes. If a target is failing its HealthCheck, the LoadBalancer may redirect traffic to other nodes, de-provision and try to re-provision the target / group.
+
+In our case the default settings are problematic for the health check, the Grav webserver performs redirection, on initialisation to the admin page to setup an account for the first time, so the healthcheck returns a `302 Found` code, which fails the health check.
+
+We have modified the `Matcher` property to accept response codes such as the 302 redirect. This means our target group will validly pass the health checks and not be shutdown. 
+
+<details>
+  <summary>Click me</summary>
+
+  tes
+</details>
+
 
 <div>
   <iframe id="inlineFrameExample"
