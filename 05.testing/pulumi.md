@@ -4,11 +4,11 @@
 # A .mov
 ![testmov](testmov.mov?loop=1&controls=0&autoplay=1&muted)
 
-# A .mp4
+# An .mp4
 ![testmp4](test_mp4.mp4?loop=1&controls=0&autoplay=1&muted)
 
-# A .mp4
-![testmp4](test_mp4.mp4?loop=1&controls=0)
+# Resized .mp4
+![testmp4](test_mp4.mp4?loop=1&controls=0&autoplay=1&muted&resize=600,400)
 
 # An iFrame
 <div>
