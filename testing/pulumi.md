@@ -2,7 +2,7 @@
 ![testmov](testpng.png)
 
 # A .mov
-![testmov](testmov.mov)
+![testmov](testmov.mov?loop=1&controls=0&autoplay=1&muted)
 
 # An iFrame
 <div>
