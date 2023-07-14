@@ -8,7 +8,7 @@ First decide if your webserver requires persistent storage or not. You can use D
 
 As we know we want to use Grav, we're going to create an instance using a NGINX webserver base bitnami image.
 
-![Alt text](<ls_setup1.png>)
+![Alt text](ls_setup1.png)
 
 [Bitnami](https://docs.bitnami.com/aws/infrastructure/nginx) is a OS packaged image service that comes pre-installed with various software and services to make it more conveniant to deploy an instance.
 
