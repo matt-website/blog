@@ -1,6 +1,7 @@
 ---
 title: Blog Post Title
 date: 01/01/2022
+hero_image: hyperscaler-lightsail.png
 metadata:
     'og:title': Blog Post Title
     'og:type': article
@@ -19,7 +20,6 @@ taxonomy:
     category: [Blog post category]
     tag: [Tag 1, Tag 2, Tag 3, Tag 4]
     author: Author's name
-    hero_image: hyperscaler-lightsail.png
 ---
 
 Wow - well, the Docker -> Pulumi -> EC2 etc route turned out to be SO much more complicated than I was expecting and I simply couldn't get it working in a reasonable time threshold
